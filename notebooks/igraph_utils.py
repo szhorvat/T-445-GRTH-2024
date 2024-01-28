@@ -29,7 +29,11 @@ def format_igraph(g : igraph.Graph, **kwargs):
             kwargs['layout'] = g.layout_fruchterman_reingold()
         random.setstate(rng_state)
 
+    if 'edge_loop_size' not in kwargs:
+        kwargs['edge_loop_size'] = -2
+
     ax = plt.subplot()
     ax.invert_yaxis()
-    plt.axis('equal')
+    ax.axis('equal')
+    ax.set_title('%d vertice(s), %d edge(s)' % (g.vcount(), g.ecount()))
     return igraph.plot(g, target=ax, **kwargs)
